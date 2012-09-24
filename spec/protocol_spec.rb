@@ -7,9 +7,19 @@ describe Cucub::Protocol::Loader do
 
   describe "#parse" do
     it "should return a valid SpecificationSet" do
-      @loader = Cucub::Protocol::Loader.new(@filepath + "/mock/protocol.ini")
+      @loader = Cucub::Protocol::Loader.instance
+      @loader.set_path(@filepath + "/mock/protocol.ini")
       specification_set = @loader.parse
-      puts specification_set.object_specifications.inspect
+      specification_set.object_specifications.each {|obj_spec|
+        puts "object: #{obj_spec.class_name}"
+        puts "serialize: #{obj_spec.serialize}"
+        obj_spec.action_specifications.each {|act|
+          puts "\taction: #{act.action_name}"
+          puts "\tserialize: #{act.serialize}"
+        }
+        puts "\n"
+        #puts obj_spec.inspect
+      }
     end
   end
 

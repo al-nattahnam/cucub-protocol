@@ -1,16 +1,8 @@
 module Cucub
   module Protocol
     class Specification
-      attr_reader :uses_box, :uses_mailbox, :uses_board, :serialize, :compression, :encryption
       
       def initialize
-        @uses_box = false
-        @uses_mailbox = false
-        @uses_board = false
-        
-        @serialize = :none # msgpack
-        @compression = :none # gzip
-        @encryption = :none # 
       end
 
       def uses_box=(uses_box)
@@ -67,7 +59,7 @@ module Cucub
       def serialize=(serialization)
         serialization = serialization.to_sym
         raise "invalid serialization type!" if ![:none, :msgpack].include?(serialization)
-        @serialization = serialization
+        @serialize = serialization
       end
 
       def compression=(compression)
