@@ -28,15 +28,15 @@ module Cucub
       end
       
       def uses_box
-        @uses_box || object_specification.uses_box
+        @uses_box || object_specification.has_default?(:box)
       end
 
       def uses_mailbox
-        @uses_mailbox || object_specification.uses_mailbox
+        @uses_mailbox || object_specification.has_default?(:mailbox)
       end
 
       def uses_board
-        @uses_board || object_specification.uses_board
+        @uses_board || object_specification.has_default?(:board)
       end
 
       def serialize

@@ -10,6 +10,8 @@ module Cucub
         @role = :both # both receiver emitter
 
         @action_specifications = []
+
+        @uses = :box
         
         super()
       end
@@ -19,17 +21,27 @@ module Cucub
         raise "invalid role!" if ![:both, :receiver, :emitter].include?(role)
         @role = role
       end
+
+      def default_uses=(uses)
+        uses = uses.to_sym
+        raise "invalid uses type!" if ![:box, :board, :mailbox].include?(uses)
+        @uses = uses
+      end
+
+      def has_default?(uses)
+        @uses == uses
+      end
       
       def uses_box
-        @uses_box || false
+        @action_specifications.select(&:uses_box).size > 0
       end
 
       def uses_mailbox
-        @uses_mailbox || false
+        @action_specifications.select(&:uses_mailbox).size > 0
       end
 
       def uses_board
-        @uses_board || false
+        @action_specifications.select(&:uses_board).size > 0
       end
 
       def serialize
