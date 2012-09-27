@@ -28,15 +28,31 @@ module Cucub
       end
       
       def uses_box
-        @uses_box || object_specification.has_default?(:box)
+        if uses_defined?
+          @uses_box || false
+        else
+          object_specification.has_default?(:box)
+        end
       end
 
       def uses_mailbox
-        @uses_mailbox || object_specification.has_default?(:mailbox)
+        if uses_defined?
+          @uses_mailbox || false
+        else
+          object_specification.has_default?(:mailbox)
+        end
       end
 
       def uses_board
-        @uses_board || object_specification.has_default?(:board)
+        if uses_defined?
+          @uses_board || false
+        else
+          object_specification.has_default?(:board)
+        end
+      end
+
+      def uses_defined?
+        @uses_box || @uses_mailbox || @uses_board
       end
 
       def serialize

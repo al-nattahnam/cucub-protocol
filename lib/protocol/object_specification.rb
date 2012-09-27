@@ -33,15 +33,15 @@ module Cucub
       end
       
       def uses_box
-        @action_specifications.select(&:uses_box).size > 0
+        has_default?(:box) || !@action_specifications.select(&:uses_box).empty?
       end
 
       def uses_mailbox
-        @action_specifications.select(&:uses_mailbox).size > 0
+        has_default?(:mailbox) || !@action_specifications.select(&:uses_mailbox).empty?
       end
 
       def uses_board
-        @action_specifications.select(&:uses_board).size > 0
+        has_default?(:board) || !@action_specifications.select(&:uses_board).empty?
       end
 
       def serialize
