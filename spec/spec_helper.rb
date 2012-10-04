@@ -5,7 +5,8 @@ require 'rspec'
 require 'bundler'
 Bundler.require(:default, :development)
 
-Dir["#{File.dirname(__FILE__)}/../lib/**/*.rb"].each {|f| require f}
+Dir["#{File.dirname(__FILE__)}/../lib/*.rb"].each {|f| require f}
+#Dir["#{File.dirname(__FILE__)}/../lib/**/*.rb"].each {|f| require f}
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

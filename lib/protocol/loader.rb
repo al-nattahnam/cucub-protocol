@@ -16,6 +16,7 @@ module Cucub
       def parse
         basefile = IniFile.load(@filepath)
         
+        return false if not basefile
         current_specifications = Cucub::Protocol::SpecificationSet.new
 
         basefile.sections.reject { |x| x.include?("#") }.each { |section|

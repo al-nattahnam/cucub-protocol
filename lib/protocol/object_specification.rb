@@ -1,6 +1,6 @@
 module Cucub
   module Protocol
-    class ObjectSpecification < Specification
+    class ObjectSpecification < Cucub::Protocol::Specification
       attr_reader :class_name
       attr_reader :role
       

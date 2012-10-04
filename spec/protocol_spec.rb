@@ -6,6 +6,17 @@ describe Cucub::Protocol::Loader do
   end
 
   describe "#parse" do
+    subject { Cucub::Protocol::Loader.instance }
+    context "when parsing a valid config" do
+      before { subject.set_path(@filepath + "/mock/protocol.ini") }
+      it { subject.parse.should be_a Cucub::Protocol::SpecificationSet }
+    end
+    
+    context "when parsing an unexisting file" do
+      before { subject.set_path(@filepath + "/mock/unexisting.ini") }
+      it { subject.parse.should == false }
+    end
+
 =begin
     it "should return a valid SpecificationSet" do
       @loader = Cucub::Protocol::Loader.instance
@@ -24,6 +35,7 @@ describe Cucub::Protocol::Loader do
     end
 =end
     
+=begin
     it "should return a valid SpecificationSet" do
       @loader = Cucub::Protocol::Loader.instance
       @loader.set_path(@filepath + "/mock/protocol.ini")
@@ -43,62 +55,6 @@ describe Cucub::Protocol::Loader do
         #puts obj_spec.inspect
       }
     end
-  end
-
-=begin
-  describe 'run!' do
-    it 'should pass' do
-      constraint = Bliss::Constraint.new("root", :tag_name_required)
-      constraint.run!({'root' => {'tag_1' => 'test', 'tag_2' => 'test'}})
-      constraint.state.should == :passed
-    end
-    
-    it 'should pass too' do
-      constraint = Bliss::Constraint.new("(root|ROOT)", :tag_name_required)
-      constraint.run!({'ROOT' => {'tag_1' => 'test', 'tag_2' => 'test'}})
-      constraint.state.should == :passed
-    end
-
-    it 'should not pass' do
-      constraint = Bliss::Constraint.new("(root|ROOT)", :tag_name_required)
-      constraint.run!({'another' => {'tag_1' => 'test', 'tag_2' => 'test'}})
-      constraint.state.should == :not_passed
-    end
-
-    context "multiple depth levels" do
-      it "should pass" do
-        constraint = Bliss::Constraint.new("(root|ROOT)/id", :tag_name_required)
-        constraint.run!({'id' => 'test', 'tag_2' => 'test'})
-        constraint.state.should == :passed
-      end
-      
-      it "should not pass" do
-        constraint = Bliss::Constraint.new("(root|ROOT)/id", :tag_name_required)
-        constraint.run!({'root' => {'tag_1' => 'test', 'tag_2' => 'test'}})
-        constraint.state.should == :not_passed
-      end
-    end
-  end
-
-  describe '#settings_to_constraints' do
-    it 'should return an array with a Bliss::Constraint object' do
-      constraints = Bliss::Constraint.build_from_settings(['root'], {'tag_name_required' => true})
-      constraints.should be_a(Array)
-      constraints.size.should == 1
-      constraints.first.should be_a(Bliss::Constraint)
-    end
-
-    it 'should have depth and setting loaded' do
-      constraints = Bliss::Constraint.build_from_settings(['root'], {'tag_name_required' => true})
-      constraints.first.depth.should == 'root'
-      constraints.first.setting.should == :tag_name_required
-    end
-
-    it 'should have multiple depths' do
-      constraints = Bliss::Constraint.build_from_settings(['root'], {'tag_name_required' => true, 'tag_name_values' => ['root', 'ROOT']})
-      constraints.first.depth.should == '(root|ROOT)'
-      constraints.first.setting.should == :tag_name_required
-    end
-  end
 =end
+  end
 end

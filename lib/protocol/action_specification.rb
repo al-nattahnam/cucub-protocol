@@ -1,6 +1,6 @@
 module Cucub
   module Protocol
-    class ActionSpecification < Specification
+    class ActionSpecification < Cucub::Protocol::Specification
       attr_reader :class_name, :action_name
       attr_reader :from, :respond_to, :read_by
 
