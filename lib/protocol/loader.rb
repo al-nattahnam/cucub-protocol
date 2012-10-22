@@ -5,6 +5,11 @@ module Cucub
     class Loader
       include Singleton
       
+      # Sets the path from where the config will be read
+      #
+      # @param [String] filepath
+      #   The filepath from where the config will be read
+      #
       def set_path(filepath)
         @filepath = filepath
       end
@@ -14,7 +19,7 @@ module Cucub
       end
 
       def parse
-        basefile = IniFile.load(@filepath)
+        basefile = ::IniFile.load(@filepath)
         
         return false if not basefile
         current_specifications = Cucub::Protocol::SpecificationSet.new

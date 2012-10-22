@@ -32,7 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.1.3)
+  bundler (~> 1.2.1)
   inifile
   jeweler (~> 1.8.4)
   msgpack
