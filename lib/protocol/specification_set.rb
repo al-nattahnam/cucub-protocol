@@ -26,7 +26,7 @@ module Cucub
       end
 
       def classes
-        @object_specifications.select(&:class_name)
+        @object_specifications.collect(&:class_name)
       end
 
       def [](class_name)
