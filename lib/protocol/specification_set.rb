@@ -25,6 +25,10 @@ module Cucub
         @object_specifications.select(&:uses_board).empty?
       end
 
+      def classes
+        @object_specifications.select(&:class_name)
+      end
+
       def [](class_name)
         # TODO there should be a method to facilitate search in to spec_set for a class
         object_specification = @object_specifications.select {|spec| spec.class_name == class_name }.first
