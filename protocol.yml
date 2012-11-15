@@ -1,0 +1,58 @@
+---
+To Write Classes: Reference, Protocol, Message, Namespace-CP-Zone
+
+
+Protocol:
+========
+object_class:
+  [blocking: true]
+  role: emmiter/receiver/both
+  uses_box: true (tipo ventanilla)
+  uses_mailbox: true (tipo mailbox)
+  uses_schedules_mailbox: true (mailbox alternativo)
+  uses_board: true (lista de novedades, broadcast)
+  [only_accept_schedules_from: [reference, reference, reference] it means that it can receive messages which try to schedule a receiving of messages from that kind of objects.]
+
+<blocking on same tune at remote (rule: try to never implemente this kind of communication)>
+- so no block is default :)
+
+message types:
+(void)      know          informative   accion sin esperar una respuesta (*)
+(mensaje)   do!           imperative    accion esperando una respuesta (*)
+(<result>)  mensaje.ipa?  interrogative pedir cual es el nuevo estado de un mensaje
+
+(*): puede haber o no cambio de estado en el objeto receptor
+
+message transfer reliability:
+
+1) do! not waiting for ack.                   not-reliable    PUSH/PULL dejar mensaje en el buzon
+2) know, not waiting for ack.                 not-reliable    PUSH/PULL dejar mensaje en el buzon
+3) do! waiting for ack.                       reliable   REQ/REP   dejar mensaje por ventanilla (se obtiene una respuesta de recibido)
+4) ipa? (waiting for ack, obvio)              reliable        REQ/REP   preguntar por ventanilla
+5) do! + reply_to, ipa? (revisar en buzon local) reliable               revisar mailbox local
+
+use_received_evidence: true / false
+# acknowledgment
+
+TODO: retries?
+TODO: scheduled response
+
+Message:
+=======
+uuid:        unique ID set on local (sirve para preguntar por el nuevo estado de un mensaje)
+from:       reference                               the current Object and Class which is sending the message.
+to:         reference                               the Class or the specific Object to which the message should be sent.
+type:       informative/imperative/interrogative    the kind of action required for the object/class to do.
+[chain]:    Ticket/s                                the trace of messaging so specific routing can be done.
+reply-to*:  reference/broadcast
+
+action:     action name
+additional: hash with additional info (it is always a hash)
+
+An available Router in the CP handles this messages and tries to forward it to the specific Object.
+
+[] = not in milestone 0.0.1
+* = optional
+neighbourhood = the namespace where the Object which takes the message should exist.
+CP = ID for a namespace.
+reference = CP+Class+Object, or Class+Object, or Class
