@@ -11,8 +11,8 @@
 #       > Message.body = Body (without attrs loaded, crypted/serialized string)
 #
 
-require './lib/message/header'
-require './lib/message/body'
+require 'message/header'
+require 'message/body'
 
 module Cucub
   class Message

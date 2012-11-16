@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = "2012-10-24"
+  s.date = "2012-11-16"
   s.description = "longer description of your gem"
   s.email = "krakatoa1987@gmail.com"
   s.extra_rdoc_files = [
@@ -27,12 +27,17 @@ Gem::Specification.new do |s|
     "cucub-protocol.gemspec",
     "lib/cucub-protocol.rb",
     "lib/message.rb",
+    "lib/message/body.rb",
+    "lib/message/header.rb",
     "lib/protocol.rb",
     "lib/protocol/action_specification.rb",
     "lib/protocol/loader.rb",
     "lib/protocol/object_specification.rb",
     "lib/protocol/specification.rb",
     "lib/protocol/specification_set.rb",
+    "lib/reference.rb",
+    "msg_testing.rb",
+    "protocol.yml",
     "spec/mock/protocol.ini",
     "spec/protocol_spec.rb",
     "spec/spec_helper.rb",

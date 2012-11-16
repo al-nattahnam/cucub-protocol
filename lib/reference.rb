@@ -4,8 +4,8 @@ module Cucub
     attr_reader :class_name
     
     def initialize(opts={})
-      @object_uuid = opts[:object_uuid]
-      @class_name = opts[:class_name]
+      @object_uuid = opts["object_uuid"]
+      @class_name = opts["class_name"]
     end
 
     def to_hash

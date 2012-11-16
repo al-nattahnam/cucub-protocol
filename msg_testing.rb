@@ -2,6 +2,8 @@ require './lib/message'
 require './lib/reference'
 require 'msgpack'
 
+# action deberia automaticamente parsearse como symbol, para poder mandar por send
+
 ref = Cucub::Reference.new({:object_uuid => 1, :class_name => "Core"})
 ref2 = Cucub::Reference.new({:object_uuid => 2, :class_name => "Engine"})
 
@@ -18,3 +20,7 @@ message2.locked?
 message2.unlock(:msgpack)
 puts "action: #{message2.action} | additionals: #{message2.additionals}"
 message2.locked?
+
+# testear header.parse
+# testear reference.parse
+# testear message.parse
