@@ -1,3 +1,5 @@
+require_relative './policies/respond_to'
+
 module Cucub
   module Protocol
     class Specification
