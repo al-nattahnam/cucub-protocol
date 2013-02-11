@@ -56,6 +56,19 @@ module Cucub
         end
       end
 
+      def respond_to=(respond_to)
+        case respond_to
+          when nil
+            @respond_to = nil
+          when "class", "object", "class+object"
+            values = respond_to.split("+")
+            @respond_to = values
+          else
+            @respond_to = respond_to
+            # raise "invalid respond_to value!: #{respond_to}"
+        end
+      end
+
       def serialize=(serialization)
         serialization = serialization.to_sym
         raise "invalid serialization type!" if ![:none, :msgpack].include?(serialization)

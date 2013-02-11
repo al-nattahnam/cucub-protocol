@@ -2,7 +2,7 @@ module Cucub
   module Protocol
     class ObjectSpecification < Cucub::Protocol::Specification
       attr_reader :class_name
-      attr_reader :role
+      attr_reader :role, :respond_to
       
       def initialize(class_name)
         @class_name = class_name

@@ -3,8 +3,8 @@ module Cucub
   end
 end
 
-require 'protocol/specification'
-require 'protocol/action_specification'
-require 'protocol/object_specification'
-require 'protocol/specification_set'
-require 'protocol/loader'
+require_relative './protocol/specification'
+require_relative './protocol/action_specification'
+require_relative './protocol/object_specification'
+require_relative './protocol/specification_set'
+require_relative './protocol/loader'

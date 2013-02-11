@@ -35,6 +35,8 @@ module Cucub
             h[attr] = value
             h
           }.to_msgpack
+          @serialized = Base64.encode64(@serialized)
+          puts "SERIALIZED: #{@serialized}"
         }
         return @serialized
       end
@@ -53,7 +55,8 @@ module Cucub
         puts "Unlocking..."
         case mechanism
           when :msgpack
-            decoded = MessagePack.unpack(@serialized)
+            decoded = Base64.decode64(@serialized)
+            decoded = MessagePack.unpack(decoded)
             @action = decoded["action"]
             @additionals = decoded["additionals"]
             @serialized = nil

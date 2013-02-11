@@ -2,25 +2,22 @@ module Cucub
   module Protocol
     class ActionSpecification < Cucub::Protocol::Specification
       attr_reader :class_name, :action_name
-      attr_reader :from, :respond_to, :read_by
+      attr_reader :from, :read_by
 
-      def initialize(class_name, action_name)
+      def initialize(class_name, action_name, loader)
         @class_name = class_name
         @action_name = action_name
+        @loader = loader
 
         super()
       end
 
       def object_specification
-        Cucub::Protocol::Loader.instance.specifications[@class_name]
+        @loader.specifications[@class_name]
       end
 
       def from=(from)
         @from = from
-      end
-
-      def respond_to=(respond_to)
-        @respond_to = respond_to
       end
 
       def read_by=(read_by)
@@ -53,6 +50,10 @@ module Cucub
 
       def uses_defined?
         @uses_box || @uses_mailbox || @uses_board
+      end
+
+      def respond_to
+        @respond_to || object_specification.respond_to
       end
 
       def serialize
