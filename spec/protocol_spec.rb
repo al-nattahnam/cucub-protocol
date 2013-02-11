@@ -6,7 +6,7 @@ describe Cucub::Protocol::Loader do
   end
 
   describe "#parse" do
-    subject { Cucub::Protocol::Loader.instance }
+    subject { Cucub::Protocol::Loader.new }
     context "when parsing a valid config" do
       before { subject.set_path(@filepath + "/mock/protocol.ini") }
       it { subject.parse.should be_a Cucub::Protocol::SpecificationSet }

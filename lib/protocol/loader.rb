@@ -1,10 +1,7 @@
-require 'singleton'
-
 module Cucub
   module Protocol
     class Loader
-      include Singleton
-      
+
       # Sets the path from where the config will be read
       #
       # @param [String] filepath
@@ -48,7 +45,7 @@ module Cucub
       end
 
       def parse_action_specification(class_name, action_name, section)
-        action_specification = Cucub::Protocol::ActionSpecification.new(class_name, action_name)
+        action_specification = Cucub::Protocol::ActionSpecification.new(class_name, action_name, self)
 
         section.each_pair { |key, value|
           action_specification.send("#{key}=".to_sym, value)
