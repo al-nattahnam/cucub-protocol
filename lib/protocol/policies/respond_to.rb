@@ -51,7 +51,28 @@ module Cucub
           policy_hash
         end
 
+        def self.parse_match_to_pair(symbol, word)
+          symbol = nil if symbol.eql?("")
+          case symbol
+            when "*"
+              return Cucub::Protocol::Policies::RespondTo::LVL_ANY
+            when "~"
+              return Cucub::Protocol::Policies::RespondTo::LVL_SAME
+            when nil
+              return [LVL_SPECIFIC, word]
+          end
+        end
+
         def self.parse(text_config)
+
+          regexp = /\s*(((~?)(\w*)|(\*))\s*)(>\s*((~?)(\w*)|(\*))\s*)(>\s*((~?)(\w+)|(\*)))/
+          
+          matches = text_config.match(regexp)
+
+          instance_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[5] || matches[3], matches[4])
+          class_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[10] || matches[8], matches[9])
+          zone_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[15] || matches[13], matches[14])
+
           Cucub::Protocol::Policies::RespondTo.new(instance_pair, class_pair, zone_pair)
         end
       end

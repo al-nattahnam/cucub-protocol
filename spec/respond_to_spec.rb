@@ -39,16 +39,55 @@ describe Cucub::Protocol::Policies::RespondTo do
   end
   describe ".parse" do
     #subject { Cucub::Protocol::Loader.new }
+    context "when parsing a valid config" do
+      subject { Cucub::Protocol::Policies::RespondTo.parse("* > ~ > ~zone") }
+      it { subject.valid_instances_string.should == "any" }
+      it { subject.valid_classes_string.should == "same" }
+      it { subject.valid_zones_string.should == "same" }
+    end
+    
+    context "when parsing a valid config" do
+      subject { Cucub::Protocol::Policies::RespondTo.parse("* > core  > ~zone") }
+      it { subject.valid_instances_string.should == "any" }
+      it { subject.valid_classes_string.should == "specific{core}" }
+      it { subject.valid_zones_string.should == "same" }
+    end
+    
+    context "when parsing a valid config" do
+      subject { Cucub::Protocol::Policies::RespondTo.parse("~ > ~  > ~zone") }
+      it { subject.valid_instances_string.should == "same" }
+      it { subject.valid_classes_string.should == "same" }
+      it { subject.valid_zones_string.should == "same" }
+    end
+    
+    context "when parsing a valid config" do
+      subject { Cucub::Protocol::Policies::RespondTo.parse("~ > ~ > *") }
+      it { subject.valid_instances_string.should == "same" }
+      it { subject.valid_classes_string.should == "same" }
+      it { subject.valid_zones_string.should == "any" }
+    end
+    
     #context "when parsing a valid config" do
-    #  subject { Cucub::Protocol::Policies::RespondTo.parse("test") }
-    #  it { subject.valid_instances_string.should == "test" }
+    #  subject { Cucub::Protocol::Policies::RespondTo.parse("*") }
+    #  it { subject.valid_instances_string.should == "any" }
+    #  it { subject.valid_classes_string.should == "same" }
+    #  it { subject.valid_zones_string.should == "any" }
+    #end
+    #
+    #context "when parsing a valid config" do
+    #  subject { Cucub::Protocol::Policies::RespondTo.parse("* > *") }
+    #  it { subject.valid_instances_string.should == "any" }
+    #  it { subject.valid_classes_string.should == "any" }
+    #  it { subject.valid_zones_string.should == "any" }
+    #end
+    #
+    #context "when parsing a valid config" do
+    #  subject { Cucub::Protocol::Policies::RespondTo.parse("* > engine") }
+    #  it { subject.valid_instances_string.should == "any" }
+    #  it { subject.valid_classes_string.should == "specific{engine}" }
+    #  it { subject.valid_zones_string.should == "any" }
     #end
     
-    #context "when parsing an unexisting file" do
-    #  before { subject.set_path(@filepath + "/mock/unexisting.ini") }
-    #  it { subject.parse.should == false }
-    #end
-
   end
   
 end
