@@ -25,6 +25,18 @@ module Cucub
           valid_string_for(@valid_zones)
         end
 
+        def is_instance_specific?
+          [@valid_instances[:check_level] == LVL_SPECIFIC, @valid_instances[:specific]]
+        end
+        
+        def is_class_specific?
+          [@valid_classes[:check_level] == LVL_SPECIFIC, @valid_classes[:specific]]
+        end
+        
+        def is_zone_specific?
+          [@valid_zones[:check_level] == LVL_SPECIFIC, @valid_zones[:specific]]
+        end
+
         private
         def valid_string_for(hash)
           result = Cucub::Protocol::Policies::RespondTo.check_level_string(hash[:check_level])
@@ -55,9 +67,9 @@ module Cucub
           symbol = nil if symbol.eql?("")
           case symbol
             when "*"
-              return Cucub::Protocol::Policies::RespondTo::LVL_ANY
+              return LVL_ANY
             when "~"
-              return Cucub::Protocol::Policies::RespondTo::LVL_SAME
+              return LVL_SAME
             when nil
               return [LVL_SPECIFIC, word]
           end
@@ -69,9 +81,9 @@ module Cucub
           
           matches = text_config.match(regexp)
 
-          instance_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[5] || matches[3], matches[4])
-          class_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[10] || matches[8], matches[9])
-          zone_pair = Cucub::Protocol::Policies::RespondTo.parse_match_to_pair(matches[15] || matches[13], matches[14])
+          instance_pair = parse_match_to_pair(matches[5] || matches[3], matches[4])
+          class_pair = parse_match_to_pair(matches[10] || matches[8], matches[9])
+          zone_pair = parse_match_to_pair(matches[15] || matches[13], matches[14])
 
           Cucub::Protocol::Policies::RespondTo.new(instance_pair, class_pair, zone_pair)
         end

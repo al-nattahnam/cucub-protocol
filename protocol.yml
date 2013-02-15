@@ -1,5 +1,5 @@
 ---
-To Write Classes: Reference, Protocol, Message, Namespace-CP-Zone
+To Write Classes: Protocol, Namespace-CP-Zone
 
 
 Protocol:
@@ -56,3 +56,95 @@ An available Router in the CP handles this messages and tries to forward it to t
 neighbourhood = the namespace where the Object which takes the message should exist.
 CP = ID for a namespace.
 reference = CP+Class+Object, or Class+Object, or Class
+
+
+man respond_to (https://gist.github.com/krakatoa/eb9d9f3f2472b35b1e9a):
+===============
+
+respond_to = [object_id defaults *]>class defaults ~>[cp defaults ~]
+
+~instance means: response uses the same destination as the message respond_to object_uuid (alias ~)
+~class means: response uses the same class destination as the message respond_to object_uuid (alias ~)
+* means: any. It could be any instance, or any CP. It does not apply to classes.
+
+valid masks:
+-----------
+
+respond_to = ~instance
+respond_to = * > ~class
+respond_to = > core >
+
+Nota: Se rechaza el mensaje siempre que se especifique un object_uuid sin clase.
+----
+
+A1)
+Restringir que la instancia a la que se responde sea la misma que la referencia de origen.
+------------------------------------------------------------------------------------------
+respond_to = ~instance
+respond_to = ~
+
+-> Todos los mensajes que no especifiquen el object_uuid para respuesta, tendran el uuid igual al uuid de origen del mensaje.
+-> Todos los mensajes que especifiquen un object_uuid distinto al uuid de origen, seran rechazados.
+-> Todos los mensajes que no especifiquen la clase para respuesta, tendran la clase de origen del mensaje.
+-> Todos los mensajes que especifiquen una clase distinta, seran rechazados.
+
+#A2) postergar seteo de uuids arbitrarios en Protocol.ini
+#Restringir que la instancia a la que se responde sea arbitrariamente elegida. Es obligatorio setear la clase a la que pertenece.
+#respond_to = ID18 > engine
+#-> Todos los mensajes que no especifiquen el object_uuid para respuesta, tendran este valor de uuid.
+#-> Todos los mensajes que especifiquen un object_uuid distinto, seran rechazados.
+#-> Todos los mensajes que no especifiquen la clase para respuesta, tendran este valor de clase.
+#-> Todos los mensajes que especifiquen una clase distinta, seran rechazados.
+
+
+A3)
+Permitir que la instancia a la que se responde sea cualquiera.
+------------------------------------------------------------------------------------------
+respond_to = *
+
+-> Todos los mensajes que no especifiquen el object_uuid para respuesta, no tendran un uuid especifico.
+-> Todos los mensajes que especifiquen un object_uuid, tendran ese valor.
+-> Todos los mensajes que no especifiquen la clase para respuesta, tendran la clase de origen del mensaje.
+-> Todos los mensajes que especifiquen una clase distinta, seran rechazados.
+
+
+B1)
+Restringir que la clase a la que se responde sea la misma que la referencia de origen.
+------------------------------------------------------------------------------------------
+
+respond_to = > ~class
+respond_to = * > ~class
+
+(igual a A3)
+
+
+B2)
+Restringir que la clase y object_uuid a la que se responde sea la misma que la referencia de origen.
+------------------------------------------------------------------------------------------
+respond_to = ~instance > ~class
+
+(igual a A1)
+
+
+B3)
+Restringir que la clase a la que se responde sea arbitrariamente elegida.
+------------------------------------------------------------------------------------------
+respond_to = > engine
+respond_to = * > engine
+
+-> Todos los mensajes que no especifiquen el object_uuid para respuesta, no tendran un uuid especifico.
+-> Todos los mensajes que especifiquen un object_uuid, tendran ese valor.
+-> Todos los mensajes que no especifiquen la clase para respuesta, tendran esta clase.
+-> Todos los mensajes que especifiquen una clase distinta, seran rechazados.
+
+
+B4)
+Permitir que la clase a la que se responde sea cualquiera.
+------------------------------------------------------------------------------------------
+respond_to = > *
+respond_to = * > *
+
+-> Todos los mensajes que no especifiquen el object_uuid para respuesta, no tendran un uuid especifico.
+-> Todos los mensajes que especifiquen un object_uuid, tendran ese valor.
+-> Todos los mensajes que no especifiquen la clase para respuesta, tendran la clase de origen del mensaje.
+-> Todos los mensajes que especifiquen una clase distinta, tendran esa clase.

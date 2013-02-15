@@ -59,16 +59,7 @@ module Cucub
       end
 
       def respond_to=(respond_to)
-        case respond_to
-          when nil
-            @respond_to = nil
-          when "class", "object", "class+object"
-            values = respond_to.split("+")
-            @respond_to = values
-          else
-            @respond_to = respond_to
-            # raise "invalid respond_to value!: #{respond_to}"
-        end
+        @respond_to = Cucub::Protocol::Policies::RespondTo.parse(respond_to)
       end
 
       def serialize=(serialization)
