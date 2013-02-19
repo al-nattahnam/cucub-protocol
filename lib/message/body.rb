@@ -54,7 +54,8 @@ module Cucub
         return false if not locked?
         puts "Unlocking..."
         case mechanism
-          when :msgpack
+          # TODO implement this mechanisms in a Strategy pattern
+          when :msgpack, :inner_outbound
             decoded = Base64.decode64(@serialized)
             decoded = MessagePack.unpack(decoded)
             @action = decoded["action"]

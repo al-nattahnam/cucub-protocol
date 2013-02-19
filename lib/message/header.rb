@@ -29,10 +29,12 @@ module Cucub
       end
 
       def self.parse(hash)
+        # It may not receive a respond_to in case of sending: registrations (from VM to Server); ready jobs (from VM to Server)..
+        respond_to = Cucub::Reference.new(hash["respond_to"]) rescue nil
         Cucub::Message::Header.new(
           "from" => Cucub::Reference.new(hash["from"]),
           "to" => Cucub::Reference.new(hash["to"]),
-          "respond_to" => Cucub::Reference.new(hash["respond_to"])
+          "respond_to" => respond_to
         )
       end
 

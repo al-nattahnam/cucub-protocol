@@ -25,7 +25,7 @@ module Cucub
         @header = Cucub::Message::Header.parse(opts["header"])
         @body = Cucub::Message::Body.load(opts["body"])
       else
-        opts_for_header = opts.select{|key| ["from", "to", "respond_to"].include?(key)}
+        opts_for_header = opts.select{|key| ["from", "to", "respond_to", "layer"].include?(key)}
         @header = Cucub::Message::Header.new(opts_for_header)
         @body = Cucub::Message::Body.new(opts["action"], opts["additionals"])
       end
