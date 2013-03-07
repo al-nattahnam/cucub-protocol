@@ -11,13 +11,7 @@ module Cucub
         @from = opts["from"]
         @to = opts["to"]
         @respond_to = opts["respond_to"]
-        @uuid = opts["uuid"] || Cucub::Message::Header.gen_uuid(hash)
-      end
-
-      def self.gen_uuid(seed)
-        uuid = seed
-        uuid = -uuid if uuid < 0
-        uuid.to_s(35)
+        @uuid = opts["uuid"]
       end
 
       def self.attrs

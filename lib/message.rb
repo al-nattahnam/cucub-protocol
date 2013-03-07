@@ -25,7 +25,8 @@ module Cucub
         @header = Cucub::Message::Header.parse(opts["header"])
         @body = Cucub::Message::Body.load(opts["body"])
       else
-        opts_for_header = opts.select{|key| ["from", "to", "respond_to", "layer", "uuid"].include?(key)}
+        opts_for_header = opts.select{|key| ["from", "to", "respond_to", "layer"].include?(key)}
+        opts_for_header["uuid"] = gen_uuid
         @header = Cucub::Message::Header.new(opts_for_header)
         @body = Cucub::Message::Body.new(opts["action"], opts["additionals"])
       end
@@ -57,6 +58,14 @@ module Cucub
     def additionals
       @body.additionals
     end
+    
+    private
+    def gen_uuid
+      uuid = self.object_id
+      uuid = -uuid if uuid < 0
+      uuid.to_s(35)
+    end
+
 
     def self.parse(msg)
       hash = MessagePack.unpack(msg)
